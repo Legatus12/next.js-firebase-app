@@ -1,0 +1,25 @@
+.login { @apply w-96 gap-4 }
+    .login > * { @apply w-full }
+    .form-container { @apply gap-4 }
+        .form-container > * { @apply w-full }
+        h1 { @apply text-3xl font-black }
+        p { @apply text-sm }
+        form { @apply gap-4 }
+            form > * { @apply w-full h-12 }
+            input { @apply bg-transparent border-b-2 border-black p-2 outline-none }
+            .error { @apply text-red-600 }
+            .submit { @apply bg-black hover:bg-gray-700 focus:bg-gray-700 text-white border-0 cursor-pointer duration-200 rounded }
+        .link-container { @apply gap-1 text-sm }
+        .google { @apply w-full h-12 bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 duration-200 rounded }
+            .google > svg { @apply w-4 ml-2 }
+
+
+
+
+
+
+
+
+
+
+
