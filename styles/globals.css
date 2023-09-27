@@ -22,6 +22,6 @@ body { @apply p-12 }
 
 .link { @apply text-sm text-blue-600 hover:underline focus:underline }
 
-.eye { @apply h-full cursor-pointer border-black }
+.inUse { @apply absolute h-full w-4 top-0 right-0 }
 
 .show-password { @apply flex items-center gap-2 text-sm }

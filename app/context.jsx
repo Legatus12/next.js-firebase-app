@@ -21,7 +21,7 @@ export const GlobalProvider = ({ children }) => {
             console.log(user)
             //router.push('/dashboard')
           } else {
-            router.push('/')
+            //router.push('/')
           }
         })
     })

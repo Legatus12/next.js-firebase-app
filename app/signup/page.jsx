@@ -6,10 +6,11 @@ import { GlobalContext } from '../context'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faEye, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState } from 'react'
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { collection, getDocs } from 'firebase/firestore'
+import { Ring } from '@uiball/loaders'
 
 //
 
@@ -28,7 +29,7 @@ export default function SignupPage() {
             [e.target.name]: e.target.value
         }))
         if([e.target.name] == 'username') {
-            findUsername(e.target.value)
+            fetchUsername(e.target.value)
         }
     }
 
@@ -45,14 +46,6 @@ export default function SignupPage() {
     }
 
 
-    const signup = (e) => {
-        e.preventDefault()
-        if(validations() && !usernameInUse) {
-            createUserWithEmailAndPassword(auth, form.email, form.password)
-            .catch(error => handleMessage(handleFirebaseAuthError(error)))
-        }
-    }
-
     const validations = () => {
         if(form.username.length < 3) {
             handleMessage('error.usernameLength')
@@ -67,21 +60,49 @@ export default function SignupPage() {
         return true
     }
 
-    const [usernameInUse, setUsernameInUse] = useState(true)
+    const [usernameInUse, setUsernameInUse] = useState(false)
+
+    const [fetchStatus, setFetchStatus] = useState({
+        icon: null,
+        color: null
+    })
+
+    const [fetching, setFetching] = useState(false)
 
     useEffect(() => {
-        usernameInUse ? handleMessage('error.usernameInUse') : handleMessage('')
+        if(usernameInUse === true) {
+            handleMessage('error.usernameInUse')
+            setFetchStatus({ icon: faXmark, color: '#ff0000' })
+        } else {
+            handleMessage('')
+            setFetchStatus({ icon: faCheck, color: '#00ff00' })
+        }
     }, [usernameInUse])
 
-    const findUsername = async(username) => {
-        let exists = false
-        const querySnapshot = await getDocs(collection(db, "config"))
-        querySnapshot.forEach((doc) => {
-            if(username == doc.data().username) {
-                exists = true
-            }
-        })
-        setUsernameInUse(exists)
+    const fetchUsername = async(username) => {
+        if(username.length >= 3) {
+            setFetching(true)
+            let exists = false
+            const querySnapshot = await getDocs(collection(db, "config"))
+            querySnapshot.forEach((doc) => {
+                if(username == doc.data().username) {
+                    exists = true
+                }
+            })
+            setUsernameInUse(exists)
+            setFetching(false)
+        } else {
+            setFetchStatus({ icon: null, color: null })
+        }
+    }
+
+
+    const signup = (e) => {
+        e.preventDefault()
+        if(validations() && !usernameInUse) {
+            createUserWithEmailAndPassword(auth, form.email, form.password)
+            .catch(error => handleMessage(handleFirebaseAuthError(error)))
+        }
     }
 
     //
@@ -95,7 +116,16 @@ export default function SignupPage() {
                         <p>additional text</p>
                     </div>
                     <form className='center-y' onSubmit={signup}>
-                        <input type='text' name='username' placeholder='username' onChange={handleForm} />
+                        <div className='relative'>
+                            <input className='full' type='text' name='username' placeholder='username' onChange={handleForm} />
+                            <div className='inUse center'>
+                                {
+                                    fetching
+                                    ? <Ring size={40} lineWeight={5} speed={2} color="black" />
+                                    : <FontAwesomeIcon className='inUse' icon={fetchStatus.icon} style={{color: fetchStatus.color}} />
+                                }
+                            </div>
+                        </div>
                         <input type='email' name='email' placeholder='email' onChange={handleForm} />
                         <input type={showPassword ? 'text' : 'password'} name='password' placeholder='password' onChange={handleForm} className='full' />
                         <input type={showPassword ? 'text' : 'password'} name='confirmPass' placeholder='confirm password' onChange={handleForm} className='full' />
