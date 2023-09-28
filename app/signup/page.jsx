@@ -14,6 +14,8 @@ import { Ring } from '@uiball/loaders'
 
 //
 
+const uniqueUsername = process.env.NEXT_PUBLIC_UNIQUE_USERNAME
+
 export default function SignupPage() {
 
     const [form, setForm] = useState({
@@ -29,7 +31,8 @@ export default function SignupPage() {
             [e.target.name]: e.target.value
         }))
         if([e.target.name] == 'username') {
-            fetchUsername(e.target.value)
+            if(!JSON.parse(uniqueUsername))
+                fetchUsername(e.target.value)
         }
     }
 
@@ -92,10 +95,9 @@ export default function SignupPage() {
             setUsernameInUse(exists)
             setFetching(false)
         } else {
-            setFetchStatus({ icon: null, color: null })
+            setMessage('')
         }
     }
-
 
     const signup = (e) => {
         e.preventDefault()
@@ -118,17 +120,24 @@ export default function SignupPage() {
                     <form className='center-y' onSubmit={signup}>
                         <div className='relative'>
                             <input className='full' type='text' name='username' placeholder='username' onChange={handleForm} />
-                            <div className='inUse center'>
-                                {
-                                    fetching
-                                    ? <Ring size={40} lineWeight={5} speed={2} color="black" />
-                                    : <FontAwesomeIcon className='inUse' icon={fetchStatus.icon} style={{color: fetchStatus.color}} />
-                                }
-                            </div>
+                            {
+                                !JSON.parse(uniqueUsername) && (
+                                    <div className='inUse center'>
+                                        {
+                                            fetching
+                                            ? <Ring size={40} lineWeight={5} speed={2} color="black" />
+                                            : (
+                                                form.username.length >= 3 && <FontAwesomeIcon className='inUse' icon={fetchStatus.icon} style={{color: fetchStatus.color}} />
+                                            )
+                                        }
+                                    </div>
+                                )
+                            }
+                            
                         </div>
                         <input type='email' name='email' placeholder='email' onChange={handleForm} />
-                        <input type={showPassword ? 'text' : 'password'} name='password' placeholder='password' onChange={handleForm} className='full' />
-                        <input type={showPassword ? 'text' : 'password'} name='confirmPass' placeholder='confirm password' onChange={handleForm} className='full' />
+                        <input type={showPassword ? 'text' : 'password'} name='password' placeholder='password' onChange={handleForm} />
+                        <input type={showPassword ? 'text' : 'password'} name='confirmPass' placeholder='confirm password' onChange={handleForm} />
                         <div className='show-password'>
                                 <input type="checkbox" checked={showPassword} onChange={hadleShowPassword} />
                                 <label>show password</label>

@@ -13,12 +13,12 @@ export default function HomePage() {
             <p>This is your home page.</p>
             <br />
             <Link className="link" href={'/login'}>
-                <span>login</span>
+                <span className="mr-2">login</span>
                 <FontAwesomeIcon icon={faArrowRight} />
             </Link>
             <br />
             <Link className="link" href={'/signup'}>
-                <span>signup</span>
+                <span className="mr-2">signup</span>
                 <FontAwesomeIcon icon={faArrowRight} />
             </Link>
         </div>

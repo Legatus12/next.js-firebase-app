@@ -1,16 +1,13 @@
 "use client"
 
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react"
 import { auth } from "./fb"
-import { useRouter } from "next/navigation";
 
 //
 
 export const GlobalContext = createContext()
 
 export const GlobalProvider = ({ children }) => {
-
-    const router = useRouter()
 
     const [user, setUser] = useState(null)
 
