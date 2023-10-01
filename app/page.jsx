@@ -21,6 +21,11 @@ export default function HomePage() {
                 <span className="mr-2">signup</span>
                 <FontAwesomeIcon icon={faArrowRight} />
             </Link>
+            <br />
+            <Link className="link" href={'/dashboard'}>
+                <span className="mr-2">dashboard</span>
+                <FontAwesomeIcon icon={faArrowRight} />
+            </Link>
         </div>
     )
 }

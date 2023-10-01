@@ -1,13 +1,16 @@
 "use client"
 
 import { createContext, useState, useEffect } from "react"
-import { auth } from "./fb"
+import { auth } from "../fb"
+import { useRouter } from "next/navigation"
 
 //
 
 export const GlobalContext = createContext()
 
 export const GlobalProvider = ({ children }) => {
+
+    const router = useRouter()
 
     const [user, setUser] = useState(null)
 
@@ -16,9 +19,9 @@ export const GlobalProvider = ({ children }) => {
           if(credentials) {
             setUser(credentials)
             console.log(user)
-            //router.push('/dashboard')
+            router.push(auth.currentUser.emailVerified || auth.currentUser.providerData.find(provider => provider.providerId == 'google.com') ? '/dashboard' : '/verify')
           } else {
-            //router.push('/')
+            router.push('/')
           }
         })
     })

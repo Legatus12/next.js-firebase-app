@@ -1,7 +1,7 @@
 'use client'
 
 import '../../styles/auth.css'
-import { auth, db, getConfigs, handleFirebaseAuthError } from '../fb'
+import { auth, db, getConfigs, handleFirebaseAuthError } from '../../fb'
 import { GlobalContext } from '../context'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

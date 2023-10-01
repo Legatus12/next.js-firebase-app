@@ -7,7 +7,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useState } from 'react'
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
-import { auth, handleFirebaseAuthError } from '../fb'
+import { auth, handleFirebaseAuthError } from '../../fb'
 import { GlobalContext } from '../context'
 
 //
