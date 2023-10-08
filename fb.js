@@ -5,13 +5,7 @@ import { getFirestore, doc, collection, query, where, onSnapshot, addDoc, delete
 
 
 const app = initializeApp({
-    apiKey: "AIzaSyCpk95sMdbkWiZVzXfCAU2g_fSCBvJ4PZM",
-    authDomain: "agere-firebase.firebaseapp.com",
-    projectId: "agere-firebase",
-    storageBucket: "agere-firebase.appspot.com",
-    messagingSenderId: "750177226779",
-    appId: "1:750177226779:web:d5abb26c934a41f41ea8be",
-    measurementId: "G-HVC0K54G8V"
+    /*your firebase app config*/
 })
 
 //const analytics = getAnalytics(app);

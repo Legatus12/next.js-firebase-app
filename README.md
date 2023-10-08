@@ -1,5 +1,5 @@
 ## About the project
-Use this template in order to create basic app with next.js. Log-in and sign-up are provided to manage users using Firebase Authentication using mail/password or Google as providers.
+Use this template in order to create a basic app with next.js. Log-in and sign-up are provided to manage users with Firebase Authentication using mail/password or Google as providers.
 
 ## Setting up the project
 Install the following dependencies:
